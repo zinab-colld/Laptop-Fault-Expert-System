@@ -1,0 +1,88 @@
+===============================
+ Laptop Fault Diagnosis – Expert Rules
+===============================
+
+---------------------------------------
+ 1. Input Symptoms (Facts)
+---------------------------------------
+- heating: الجهاز بيسخن؟
+- noise: هل في صوت غريب/عالي من الجهاز؟
+- battery_drop: البطارية بتنقص بسرعة أو الجهاز يفصل؟
+- screen_issue: الشاشة بتفصل / تهتز / تظهر خطوط؟
+- slow: الجهاز بطيء جداً؟
+- freeze: الجهاز يهنّج أو يعمل restart؟
+
+---------------------------------------
+ 2. Possible Faults (Conclusions)
+---------------------------------------
+- Fan Problem
+- RAM Fault
+- SSD Issue
+- Battery/Charger Problem
+- Display/GPU Problem
+- No Clear Issue Detected
+
+---------------------------------------
+ 3. Expert System Rules (IF – THEN)
+---------------------------------------
+
+Rule 1:
+IF heating = yes AND noise = yes
+THEN Fault = "Fan Problem"
+
+Rule 2:
+IF heating = yes AND noise = no AND slow = yes
+THEN Fault = "Fan Problem"
+
+Rule 3:
+IF freeze = yes AND slow = yes
+THEN Fault = "RAM Fault"
+
+Rule 4:
+IF freeze = yes AND heating = yes
+THEN Fault = "RAM Fault"
+
+Rule 5:
+IF slow = yes AND noise = no AND heating = no
+THEN Fault = "SSD Issue"
+
+Rule 6:
+IF device is slow after startup AND no freezing
+THEN Fault = "SSD Issue"
+
+Rule 7:
+IF battery_drop = yes AND heating = no
+THEN Fault = "Battery/Charger Problem"
+
+Rule 8:
+IF battery_drop = yes AND device turns off on unplug
+THEN Fault = "Battery/Charger Problem"
+
+Rule 9:
+IF screen_issue = yes
+THEN Fault = "Display/GPU Problem"
+
+Rule 10:
+IF screen_issue = yes AND heating = yes
+THEN Fault = "Display/GPU Problem"
+
+---------------------------------------
+ 4. Fallback Rule
+---------------------------------------
+Rule 11:
+IF no rules match
+THEN Fault = "No Clear Issue Detected"
+
+---------------------------------------
+ 5. Priority Order (Used in Code)
+---------------------------------------
+1. Display/GPU Problem
+2. Fan Problem
+3. RAM Fault
+4. SSD Issue
+5. Battery/Charger Problem
+6. No Clear Issue Detected
+
+===============================
+ END OF RULES FILE
+===============================
